@@ -5,6 +5,10 @@
 
 The Task Management API is a RESTful service built using Node.js, Express.js, and MongoDB. It allows users to manage their tasks by providing endpoints for creating, reading, updating, and deleting tasks. Each task can have attributes such as title, description, due date, priority, and status.
 
+## How to use with Swagger
+
+visit this URL to check the Swagger online useing ## https://taskmanager-pzwr.onrender.com/api-docs/#/ 
+
 ## Features
 
 - User authentication with JWT
