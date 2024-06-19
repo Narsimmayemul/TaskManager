@@ -12,23 +12,23 @@ describe('Task Management API', () => {
     let authToken;
 
     beforeEach(async () => {
-        // Register a new user and obtain the JWT token for authorization
+        
         const user = await request(app)
-            .post('/api/users/signup')
-            .send({ username: 'testuser', password: 'password' });
+            .post('/signup')
+            .send({ username: 'testuser', password: 'password' , email :"testuser@gmail.com" });
         authToken = user.body.token;
     });
 
     test('Should create a new task', async () => {
         await request(app)
-            .post('/api/tasks')
+            .post('/tasks')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
-                title: 'Test Task',
-                description: 'Test description',
-                dueDate: '2024-12-31',
-                priority: 'high',
-                status: 'pending'
+                title: "Sample Task 10",
+                description: "This is a sample task description",
+                dueDate: "2024-06-19",
+                priority: "low",
+                status:"pending"
             })
             .expect(201);
     });
