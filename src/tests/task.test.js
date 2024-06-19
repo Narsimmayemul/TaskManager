@@ -17,18 +17,19 @@ describe('Task Management API', () => {
             .post('/signup')
             .send({ username: 'testuser', password: 'password' , email :"testuser@gmail.com" });
         authToken = user.body.token;
+        
     });
 
     test('Should create a new task', async () => {
         await request(app)
-            .post('/tasks')
+            .post('/')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
                 title: "Sample Task 10",
                 description: "This is a sample task description",
-                dueDate: "2024-06-19",
+                dueDate: "2024-07-19",
                 priority: "low",
-                status:"pending"
+                status:"in-progress"
             })
             .expect(201);
     });
@@ -40,13 +41,13 @@ describe('Task Management API', () => {
             description: 'Test description',
             dueDate: '2024-12-31',
             priority: 'high',
-            status: 'pending',
+            status: 'in-progress',
             owner: (await User.findOne({ username: 'testuser' }))._id
         });
 
-        // Get tasks for the authenticated user
+        // Get tasks for the authenticated use
         await request(app)
-            .get('/api/tasks')
+            .get('/')
             .set('Authorization', `Bearer ${authToken}`)
             .expect(200)
             .then((response) => {
@@ -68,7 +69,7 @@ describe('Task Management API', () => {
 
         // Update the task
         await request(app)
-            .patch(`/api/tasks/${task._id}`)
+            .patch(`/${task._id}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ description: 'Updated description' })
             .expect(200);
@@ -91,7 +92,7 @@ describe('Task Management API', () => {
 
         // Delete the task
         await request(app)
-            .delete(`/api/tasks/${task._id}`)
+            .delete(`/${task._id}`)
             .set('Authorization', `Bearer ${authToken}`)
             .expect(200);
 
@@ -102,7 +103,7 @@ describe('Task Management API', () => {
 
     test('Should not create a task with due date before today', async () => {
         await request(app)
-            .post('/api/tasks')
+            .post('/')
             .set('Authorization', `Bearer ${authToken}`)
             .send({
                 title: 'Past Due Task',
@@ -125,21 +126,18 @@ describe('Task Management API', () => {
             owner: (await User.findOne({ username: 'testuser' }))._id
         });
 
-        // Attempt to update the task with an invalid update
         await request(app)
-            .patch(`/api/tasks/${task._id}`)
+            .patch(`/${task._id}`)
             .set('Authorization', `Bearer ${authToken}`)
             .send({ invalidField: 'Invalid value' })
             .expect(400, { error: 'Invalid updates!' });
     });
 
-    // Add more tests for other CRUD operations and error handling...
-
     // Example of an error handling test
     test('Should return 404 if task not found', async () => {
         const nonExistingTaskId = '60c3a1c52b3c671d287e1e99'; // Non-existing task ID
         await request(app)
-            .get(`/api/tasks/${nonExistingTaskId}`)
+            .get(`/${nonExistingTaskId}`)
             .set('Authorization', `Bearer ${authToken}`)
             .expect(404);
     });
