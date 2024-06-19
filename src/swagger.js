@@ -27,7 +27,7 @@ const options = {
             bearerAuth: []
         }]
     },
-    apis: ['./src/routes/*.js']
+    apis: ['./src/routes/*.js'] // Update this path according to your project structure
 };
 
 const specs = swaggerJsdoc(options);

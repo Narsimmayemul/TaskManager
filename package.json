@@ -5,7 +5,7 @@
   "main": "server.js",
   "test": "jest",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/app.js",
     "test": "jest --coverage"
   },
   "dependencies": {
