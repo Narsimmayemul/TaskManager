@@ -76,7 +76,7 @@ The server will start on `http://localhost:3000`.
 
 #### Sign In
 
-- **URL**: `/api/users/signin`
+- **URL**: `/api/users/login`
 - **Method**: `POST`
 - **Body**:
   ```json
