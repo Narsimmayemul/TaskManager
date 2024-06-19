@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const taskRoutes = require('./routes/taskRoutes');
 const userRoutes = require('./routes/userRoutes');
 const { swaggerUi, specs } = require('./swagger');
+const CORS = require('cors');
 require('dotenv').config();
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(CORS());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
@@ -32,7 +34,7 @@ app.use('/api/tasks', taskRoutes);
 
 app.get('/', (req, res) => {
     try {
-        res.status(200).send('This is Home Page');
+        res.status(200).send('This is Home Page visit api-docs/#/ for swagger');
     } catch (error) {
         console.log(error);
     }
